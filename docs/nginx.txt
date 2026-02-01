@@ -1,0 +1,21 @@
+events {
+    # Event directives...
+}
+
+http {
+	server {
+    listen 80;
+    server_name ec2-98-93-6-136.compute-1.amazonaws.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+	}
+}
+
+This is reverse proxy right now only we are doing is that we are directing port 80 nginx request to the localhost:3000 Where our this app is deplyed. When we use actual domain we need to add the IP of the EC2 instance to that domain mapping to use that.
